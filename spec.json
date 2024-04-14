@@ -1,0 +1,23 @@
+{
+  "spec_version": [1, 0, 0],
+  "version": [1, 0, 1],
+  "init": [
+    "create table if not exists notes (id integer not null unique, note text not null check(length(note) != 0), deleted integer not null default 0 check(deleted = 0 or deleted = 1), primary key(id autoincrement));"
+  ],
+  "queries": {
+    "read": {
+      "notes": {
+        "sql_template": "select cast(id as text), note from notes where deleted = 0;",
+        "args": [],
+        "cols": ["id", "note"]
+      }
+    },
+    "write": {
+      "add_note": {
+        "sql_template": "insert into notes (note) values (?);",
+        "args": ["note"]
+      }
+    }
+  },
+  "conversions": []
+}
