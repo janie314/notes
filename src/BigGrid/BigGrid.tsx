@@ -9,15 +9,10 @@ import {
   TableCellLayout,
   TableColumnDefinition,
 } from "@fluentui/react-components";
-import { useState } from "react";
+import { Note } from "../App";
 
-interface Item {
-  id: number;
-  note: string;
-}
-
-const columns: TableColumnDefinition<Item>[] = [
-  createTableColumn<Item>({
+const columns: TableColumnDefinition<Note>[] = [
+  createTableColumn<Note>({
     columnId: "note_id",
     renderHeaderCell: () => {
       return "ID";
@@ -30,7 +25,7 @@ const columns: TableColumnDefinition<Item>[] = [
       );
     },
   }),
-  createTableColumn<Item>({
+  createTableColumn<Note>({
     columnId: "note",
     renderHeaderCell: () => {
       return "Note";
@@ -45,11 +40,10 @@ const columns: TableColumnDefinition<Item>[] = [
   }),
 ];
 
-function BigGrid() {
-  const [items] = useState<Item[]>([{ id: 1, note: "conquer all" }]);
+function BigGrid(props: { notes: Note[] }) {
   return (
     <DataGrid
-      items={items}
+      items={props.notes}
       columns={columns}
       resizableColumns={true}
       resizableColumnsOptions={{ autoFitColumns: true }}
@@ -65,9 +59,9 @@ function BigGrid() {
           )}
         </DataGridRow>
       </DataGridHeader>
-      <DataGridBody<Item>>
+      <DataGridBody<Note>>
         {({ item, rowId }) => (
-          <DataGridRow<Item>
+          <DataGridRow<Note>
             key={rowId}
             selectionCell={{
               checkboxIndicator: { "aria-label": "Select row" },
