@@ -1,4 +1,5 @@
 import {
+  Button,
   FluentProvider,
   makeStyles,
   shorthands,
@@ -38,6 +39,7 @@ function App() {
   const styles = useStyles();
   const corolla = new Corolla("", "/api");
   const get_notes = corolla.make_read_query<{}, Note>("notes");
+  const add_note = corolla.make_write_query<{ note: string }>("add_note");
   const [notes, setNotes] = useState<Note[]>([]);
   useEffect(() => {
     get_notes({}).then((res) => {
@@ -50,7 +52,16 @@ function App() {
     <>
       <FluentProvider className={styles.provider} theme={webLightTheme}>
         <div id="app">
-          <BigGrid notes={notes}></BigGrid>
+          <BigGrid notes={notes} add_note={add_note}></BigGrid>
+          <Button
+            shape="rounded"
+            size="medium"
+            onClick={() => {
+              const res = window.prompt("note?");
+            }}
+          >
+            Add Note
+          </Button>
         </div>
       </FluentProvider>
     </>

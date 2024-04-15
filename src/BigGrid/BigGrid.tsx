@@ -10,6 +10,7 @@ import {
   TableColumnDefinition,
 } from "@fluentui/react-components";
 import { Note } from "../App";
+import { Corolla } from "corolla_api";
 
 const columns: TableColumnDefinition<Note>[] = [
   createTableColumn<Note>({
@@ -40,7 +41,12 @@ const columns: TableColumnDefinition<Note>[] = [
   }),
 ];
 
-function BigGrid(props: { notes: Note[] }) {
+function BigGrid(props: {
+  notes: Note[];
+  add_note: (args: {
+    note: string;
+  }) => Promise<Response>;
+}) {
   return (
     <DataGrid
       items={props.notes}
