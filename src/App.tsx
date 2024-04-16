@@ -41,13 +41,15 @@ function App() {
   const get_notes = corolla.make_read_query<{}, Note>("notes");
   const add_note = corolla.make_write_query<{ note: string }>("add_note");
   const [notes, setNotes] = useState<Note[]>([]);
+  async function refresh_notes() {
+    const res = await get_notes({});
+    if (res !== null) {
+      setNotes(res);
+    }
+  }
   useEffect(() => {
-    get_notes({}).then((res) => {
-      if (res !== null) {
-        setNotes(res);
-      }
-    });
-  });
+    refresh_notes();
+  }, []);
   return (
     <>
       <FluentProvider className={styles.provider} theme={webLightTheme}>
@@ -56,8 +58,16 @@ function App() {
           <Button
             shape="rounded"
             size="medium"
-            onClick={() => {
-              const res = window.prompt("note?");
+            onClick={async () => {
+              const note = window.prompt("note?");
+              if (note !== null) {
+                const res = await add_note({ note });
+                if (res.ok) {
+                  await refresh_notes();
+                } else {
+                  console.error("???");
+                }
+              }
             }}
           >
             Add Note
