@@ -5,8 +5,5 @@ require "securerandom"
 
 desc "run the dev environment"
 task :dev do
-  Process.spawn("bun run dev")
-  Process.spawn("caddy run")
-  Process.spawn("corolla", "-d", File.join("tmp", SecureRandom.uuid), "-r", "/api",
-    "-p", "50001")
+  sh "bun run dev_server.ts"
 end
