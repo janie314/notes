@@ -9,9 +9,7 @@ const corolla = Bun.spawn([
   "-p",
   "50001",
 ]);
-
 const vite = Bun.spawn(["bun", "run", "dev"]);
-
 const caddy = Bun.spawn(["caddy", "run"]);
 
 process.on("SIGINT", () => {
