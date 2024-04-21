@@ -36,17 +36,32 @@ const useStyles = makeStyles({
 });
 
 function App() {
+  // states
   const styles = useStyles();
   const corolla = new Corolla("", "/api");
   const get_notes = corolla.make_read_query<{}, Note>("notes");
   const add_note = corolla.make_write_query<{ note: string }>("add_note");
   const [notes, setNotes] = useState<Note[]>([]);
+  // state refreshes
   async function refresh_notes() {
     const res = await get_notes({});
     if (res !== null) {
       setNotes(res);
     }
   }
+  // input events
+  async function input() {
+    const note = window.prompt("note?");
+    if (note !== null) {
+      const res = await add_note({ note });
+      if (res.ok) {
+        await refresh_notes();
+      } else {
+        console.error("???");
+      }
+    }
+  }
+  // initialization
   useEffect(() => {
     refresh_notes();
   }, []);
@@ -58,17 +73,7 @@ function App() {
           <Button
             shape="rounded"
             size="medium"
-            onClick={async () => {
-              const note = window.prompt("note?");
-              if (note !== null) {
-                const res = await add_note({ note });
-                if (res.ok) {
-                  await refresh_notes();
-                } else {
-                  console.error("???");
-                }
-              }
-            }}
+            onClick={input}
           >
             Add Note
           </Button>
