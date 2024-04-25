@@ -1,6 +1,6 @@
 # Notes
 
-An example
+An example [Corolla](https://github.com/janie314/corolla) app.
 
 # Dependencies
 
