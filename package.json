@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@fluentui/react-components": "^9.47.5",
+    "@types/bun": "^1.1.0",
     "corolla_api": "^0.3.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "use-debounce": "^10.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
